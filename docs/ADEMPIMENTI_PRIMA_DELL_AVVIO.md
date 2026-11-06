@@ -1,6 +1,6 @@
 # Prima dei dati veri: privacy, sicurezza fisica, continuità, firma e regole
 
-La guida tecnica ([INSTALLAZIONE_IN_STRUTTURA.md](INSTALLAZIONE_IN_STRUTTURA.md)) porta il FASAS a funzionare.
+La guida tecnica ([INSTALLAZIONE_IN_STRUTTURA.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/INSTALLAZIONE_IN_STRUTTURA.md)) porta il FASAS a funzionare.
 Questa pagina dice **cosa va fatto dalla struttura** prima di inserire i dati veri degli ospiti, **chi lo fa**, cosa
 è già pronto e cosa costa. I documenti indicati sono **bozze da completare e far approvare**: non sono un parere
 legale e non diventano validi finché il titolare (l'ente gestore) non li firma.

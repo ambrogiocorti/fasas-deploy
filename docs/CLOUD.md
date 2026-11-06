@@ -11,7 +11,7 @@ browser / telefoni ──HTTPS──▶ dominio ──▶ servizio di hosting: c
                                                                                     · (bucket dei backup)
 ```
 
-Per l'installazione su un PC in struttura resta valida [INSTALLAZIONE_IN_STRUTTURA.md](INSTALLAZIONE_IN_STRUTTURA.md).
+Per l'installazione su un PC in struttura si usa soltanto la [repository originale](https://github.com/ambrogiocorti/fasas), non questa versione cloud.
 
 ## Cosa fa il FASAS da solo in modalità cloud (`FASAS_CLOUD=1`)
 

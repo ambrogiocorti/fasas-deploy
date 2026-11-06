@@ -8,15 +8,17 @@
 # (es. «starter»): è una decisione della struttura, va autorizzata prima di cambiarlo.
 services:
   - type: web
-    name: fasas
+    name: fasas-online
     runtime: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
     region: frankfurt # UE, vicino alla regione Supabase consigliata (eu-central-1, Francoforte)
     plan: free
     healthCheckPath: /salute/
+    domains:
+      - fasas.online
     # Nessuna pubblicazione automatica a ogni modifica su GitHub: si aggiorna con «Manual Deploy» dopo il collaudo
-    autoDeploy: false
+    autoDeployTrigger: off
     envVars:
       - key: FASAS_CLOUD
         value: "1"
@@ -30,8 +32,8 @@ services:
         sync: false
       - key: FASAS_BACKUP_KEY # da fasas_genkey; copia nella busta di custodia
         sync: false
-      - key: FASAS_DOMAIN # es. fasas.miacooperativa.it (senza https://)
-        sync: false
+      - key: FASAS_DOMAIN
+        value: fasas.online
       - key: DATABASE_URL # Supabase › Connect › Session pooler (porta 5432)
         sync: false
       - key: DATABASE_SSL_REQUIRE

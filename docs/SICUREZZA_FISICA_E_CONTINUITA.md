@@ -2,7 +2,7 @@
 
 Il server è nella struttura: la porta del locale, la cassaforte e la persona che sa cosa fare sono misure di
 sicurezza come le password. Questa pagina contiene le regole e i moduli da stampare. Riferimento tecnico:
-[INSTALLAZIONE_IN_STRUTTURA.md](INSTALLAZIONE_IN_STRUTTURA.md).
+[INSTALLAZIONE_IN_STRUTTURA.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/INSTALLAZIONE_IN_STRUTTURA.md).
 
 ## 1. Il locale del server
 
