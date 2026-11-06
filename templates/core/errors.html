@@ -15,7 +15,7 @@
     <table><thead><tr><th>Job</th><th>Ultima conclusione</th><th>Esito</th></tr></thead><tbody>
     {% for job in jobs %}<tr><td class="mono">{{ job.name }}</td><td>{{ job.last_finished|date:"d/m H:i"|default:"—" }}</td>
       <td>{% if job.last_ok %}<span class="pill pill-ok">ok</span>{% elif job.last_ok is False %}<span class="pill pill-danger">fallito</span><br><small class="mono">{{ job.last_error }}</small>{% else %}—{% endif %}</td></tr>
-    {% empty %}<tr><td colspan="3" class="empty">Nessun job eseguito: configurare Celery beat o cron (docs/DEPLOY.md).</td></tr>{% endfor %}
+    {% empty %}<tr><td colspan="3" class="empty">Nessun job eseguito: verificare il pianificatore cloud (docs/CLOUD.md).</td></tr>{% endfor %}
     </tbody></table>
   </div>
 </div>

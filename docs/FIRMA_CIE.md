@@ -159,7 +159,7 @@ il **codice fiscale**.
    `/usr/local/lib/libcie-pkcs11.so`, più `pcscd`). Percorsi presi dai manuali ufficiali.
 2. Collegare il lettore, aprire l'app **CIE ID**, appoggiare la carta e fare l'**abbinamento** (chiede le 8 cifre
    del PIN una sola volta). Senza abbinamento il Software CIE non espone il certificato e il Signer lo segnala.
-3. Installare il FASAS Signer: istruzioni in [signer/README.md](../signer/README.md).
+3. Installare il FASAS Signer: istruzioni in [signer/README.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/signer/README.md).
 4. Nel FASAS: **Impostazioni › Firma digitale › Abbina un nuovo FASAS Signer** → compare un codice; nel Signer
    «Abbina al FASAS…», inserire indirizzo del FASAS e codice.
 5. Sempre in Impostazioni: **Prova la firma con CIE** firma un PDF di prova senza dati sanitari e mostra l'esito
@@ -215,7 +215,7 @@ che usa l'NFC del telefono al posto del lettore e le stesse API del Signer per c
 | Compilazione | ✅ APK di prova compilato da GitHub (artifact `fasas-signer-android-prova`); APK definitivo con la chiave della struttura (sotto) | ✅ compila su macOS nella CI, senza firma |
 | Installazione | dal FASAS: Impostazioni › App per il telefono (gratuito) | serve l'Apple Developer Program e TestFlight |
 | Collaudo con una CIE reale | ✅ CIE + PIN FASAS (registrazione e lettura, 4/11/2026); ⬜ firma con il PIN della carta | ⬜ |
-| Guida | [mobile/android](../mobile/android/README.md) | [mobile/ios](../mobile/ios/README.md) |
+| Guida | [mobile/android](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/mobile/android/README.md) | [mobile/ios](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/mobile/ios/README.md) |
 
 Per la prova, `avvia-telefono.bat` avvia il FASAS raggiungibile dal telefono sulla stessa Wi-Fi e mostra
 l'indirizzo da inserire nell'app; solo le versioni di prova delle app accettano HTTP, e solo verso la rete locale.

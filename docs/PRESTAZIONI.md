@@ -5,7 +5,7 @@ contemporanei il 95% delle pagine risponde in meno di 0,6 secondi, senza errori.
 
 ## Risultati (31/10/2026)
 
-Ambiente: gunicorn con 3 processi (come in [DEPLOY.md](DEPLOY.md)), PostgreSQL 16, impostazioni di produzione
+Ambiente: gunicorn con 3 processi (come in [DEPLOY.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/DEPLOY.md)), PostgreSQL 16, impostazioni di produzione
 (`DJANGO_DEBUG=0`), macchina da 4 CPU che ospitava anche il generatore di carico. Dati di fantasia: 60 ospiti,
 3 terapie ciascuno, 30 giorni di storico (16.200 somministrazioni, 3.600 parametri, 3.600 voci di diario).
 Ogni operatore virtuale ripete: cruscotto, elenco ospiti, cartella, giro farmaci, contatore notifiche e ogni tre

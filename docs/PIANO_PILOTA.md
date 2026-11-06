@@ -10,7 +10,7 @@ ancora valido, non dimostrare che va tutto bene.
 |---|---|---|
 | Adempimenti: DPO, DPIA, nomine, informative, autorizzazioni del personale | direzione | [ADEMPIMENTI_PRIMA_DELL_AVVIO.md](ADEMPIMENTI_PRIMA_DELL_AVVIO.md) |
 | Test di penetrazione esterno sulla versione del pilota | soggetto indipendente | [SICUREZZA.md](SICUREZZA.md) |
-| Installazione in struttura, backup e prova di ripristino fatta dai referenti | amministratore di sistema | [INSTALLAZIONE_IN_STRUTTURA.md](INSTALLAZIONE_IN_STRUTTURA.md) |
+| Installazione in struttura, backup e prova di ripristino fatta dai referenti | amministratore di sistema | [INSTALLAZIONE_IN_STRUTTURA.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/INSTALLAZIONE_IN_STRUTTURA.md) |
 | Due referenti formati (un coordinatore, un operatore esperto) | direzione | — |
 | **Configurazione › Moduli › «Applica la configurazione per il pilota»** | amministratore | nel FASAS |
 | Ospiti del nucleo, terapie in corso e checklist di turno inseriti e ricontrollati da due persone | coordinatore | nel FASAS |

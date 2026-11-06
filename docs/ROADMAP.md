@@ -17,13 +17,13 @@ Stato al 04/11/2026, versione 0.10.0 «pilota» ([CHANGELOG](../CHANGELOG.md)). 
 | 🟡 | Backup fuori sede | software pronto e provato (object storage S3 con Object Lock, prova di ripristino trimestrale con verbale) – [BACKUP.md](BACKUP.md). **Scelto Backblaze B2** (regione UE, piano gratuito fino a 10 GB): da aprire l'account intestato alla struttura e archiviare il DPA |
 | ✅ | Autenticazione a due fattori | obbligatoria per amministratore, coordinatore, medico e per gli accessi da fuori rete |
 | ✅ | Verifica notturna dell'audit log con risultato salvato | punti di controllo con marca temporale RFC 3161 (se c'è una TSA), ricevuta verificabile con OpenSSL |
-| ✅ | Installazione in struttura | guida passo passo con lista della spesa, script `prepara_server.sh` provato nella CI, copia mensile su disco USB – [INSTALLAZIONE_IN_STRUTTURA.md](INSTALLAZIONE_IN_STRUTTURA.md) |
+| ✅ | Installazione in struttura | guida passo passo con lista della spesa, script `prepara_server.sh` provato nella CI, copia mensile su disco USB – [INSTALLAZIONE_IN_STRUTTURA.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/INSTALLAZIONE_IN_STRUTTURA.md) |
 | ✅ | Avvio di prova sicuro | controllo dei soli dati di fantasia, fascia rossa con le chiavi di sviluppo, API spenta per default, firma remota nascosta finché non configurata |
 | ✅ | Controlli unici sulle somministrazioni | dose prescritta, giorno, orario, turno, duplicati e limiti dei SOS uguali da web, API e senza rete; la struttura sceglie conferma motivata o blocco |
 | ✅ | Protocolli con campi guidati | niente testo JSON; azioni fissate all'attivazione e spuntabili una sola volta |
 | ✅ | Evacuazioni distinte | avvenuta, verificata non avvenuta, non documentata, assenza |
 | ✅ | Test delle schermate | viste coperte al 91% (quelle del turno sopra l'83%), comandi di backup e ripristino |
-| ✅ | Installazione ripetibile | versione 0.9.0, dipendenze con impronte, immagine Docker e compose con HTTPS provati nella CI – [CONTAINER.md](CONTAINER.md) |
+| ✅ | Installazione ripetibile | versione 0.9.0, dipendenze con impronte, immagine Docker e compose con HTTPS provati nella CI – [CONTAINER.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/CONTAINER.md) |
 | ✅ | Monitoraggio | `/salute/`, job sorvegliati, registro errori senza dati sanitari – [MONITORAGGIO.md](MONITORAGGIO.md) |
 | ✅ | Custodia delle chiavi | segreti da file, verifica delle chiavi, busta di custodia cifrata – [SICUREZZA.md](SICUREZZA.md#custodia-delle-chiavi) |
 | ✅ | Prova di carico | 20 operatori contemporanei, 60 ospiti: 95% delle pagine sotto 0,6 s – [PRESTAZIONI.md](PRESTAZIONI.md) |
@@ -78,4 +78,4 @@ fuori sede su **Backblaze B2** (regione UE, blocco delle modifiche per 14 giorni
 fornitore vede solo dati cifrati. Ogni mese una copia su **disco USB** custodito in un altro luogo
 (`scripts/copia_backup_usb.sh`). Ogni tre mesi la **prova di ripristino** automatica con verbale.
 Chiave `FASAS_BACKUP_KEY` in due luoghi: gestore password della direzione e busta sigillata in cassaforte.
-Dettagli: [INSTALLAZIONE_IN_STRUTTURA.md](INSTALLAZIONE_IN_STRUTTURA.md) e [BACKUP.md](BACKUP.md).
+Dettagli: [INSTALLAZIONE_IN_STRUTTURA.md](https://github.com/ambrogiocorti/fasas/blob/claude/fasas-digital-system-5v69px/docs/INSTALLAZIONE_IN_STRUTTURA.md) e [BACKUP.md](BACKUP.md).
