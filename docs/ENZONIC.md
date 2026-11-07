@@ -25,8 +25,9 @@ interrompere la configurazione del dominio e valutarne l'alternativa prima di pr
 
 ## 2. Installazione e variabili
 
-Nel terminale del server, dopo il download del repository, installare le dipendenze
-con versioni e hash bloccati: `python -m pip install --require-hashes -r requirements.lock`.
+Il file `requirements.txt` richiama `requirements.lock`: l'installazione automatica
+di Enzonic usa così versioni e hash bloccati. Se l'installazione automatica non parte,
+eseguire dalla console `python -m pip install --require-hashes -r requirements.lock`.
 Non inserire mai password o chiavi nel repository o nei comandi visibili nei log.
 
 Nell'area dedicata alle **variabili d'ambiente protette**, inserire le variabili di
