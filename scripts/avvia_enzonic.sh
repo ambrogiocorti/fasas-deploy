@@ -12,8 +12,11 @@ export FASAS_BACKUP_DIR="${FASAS_BACKUP_DIR:-$PWD/runtime/backups}"
 export GUNICORN_WORKERS="${GUNICORN_WORKERS:-1}"
 export GUNICORN_THREADS="${GUNICORN_THREADS:-2}"
 
+if [[ -z "${PORT:-}" && "${SERVER_PORT:-}" =~ ^[0-9]+$ ]]; then
+  export PORT="$SERVER_PORT"
+fi
 if [[ ! "${PORT:-}" =~ ^[0-9]+$ ]]; then
-  echo "Enzonic: imposta PORT con la porta assegnata al server nel pannello." >&2
+  echo "Enzonic: imposta PORT o SERVER_PORT con la porta assegnata nel pannello." >&2
   exit 1
 fi
 
