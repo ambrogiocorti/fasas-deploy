@@ -4,7 +4,7 @@ import time
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.functional import SimpleLazyObject
@@ -38,6 +38,21 @@ class HealthCheckMiddleware:
             from .views import health
 
             return health(request)
+        return self.get_response(request)
+
+
+class PublicDomainOnlyMiddleware:
+    """Nel cloud accetta solo gli host di FASAS_DOMAIN; non espone il portale sul dominio tecnico del provider."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if settings.FASAS_CLOUD and settings.FASAS_DOMAIN_HOSTS:
+            host = request.get_host().split(":", 1)[0].lower()
+            if host not in settings.FASAS_DOMAIN_HOSTS:
+                return HttpResponseNotFound("FASAS disponibile solo dal dominio configurato.",
+                                            content_type="text/plain; charset=utf-8")
         return self.get_response(request)
 
 

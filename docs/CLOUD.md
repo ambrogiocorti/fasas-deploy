@@ -1,7 +1,7 @@
 # Versione cloud: il FASAS su un dominio, con Supabase
 
-Il FASAS gira in un solo container presso un servizio di hosting (esempio pronto: **Render**, file `render.yaml`),
-risponde al dominio della struttura (es. `https://fasas.miacooperativa.it`) e tiene dati e file su **Supabase**
+Il FASAS gira in un solo container presso **Render** (hosting scelto, file `render.yaml`),
+risponde a **`https://fasas.online/`** e tiene dati e file su **Supabase**
 (database PostgreSQL e Storage). Nessun server in struttura, niente Redis né proxy da configurare.
 
 ```
@@ -11,7 +11,17 @@ browser / telefoni ──HTTPS──▶ dominio ──▶ servizio di hosting: c
                                                                                     · (bucket dei backup)
 ```
 
-Per l'installazione su un PC in struttura si usa soltanto la [repository originale](https://github.com/ambrogiocorti/fasas), non questa versione cloud.
+**Stesse funzioni nelle due distribuzioni**: cartelle, terapie, registri, firme, app native FASAS Signer
+(Android, iOS e desktop) e API. Le app si abbinano tramite HTTPS a `https://fasas.online/`.
+Per installare **il server** su un PC della struttura si usa la [repository originale](https://github.com/ambrogiocorti/fasas);
+qui rimane il server web, insieme alle app necessarie per firmare i documenti.
+
+**Situazione attuale del dominio:** Register è stato collegato a GitHub Pages, che sta mostrando il `README.md`.
+Quella pagina **non è l'applicazione**: GitHub Pages non può eseguire Django. Prima si attiva Render,
+poi si aggiornano in Register i record del dominio verso Render. Finché ciò non avviene, il sito non è operativo.
+La documentazione può continuare a essere pubblicata da **GitHub Pages** sull'indirizzo predefinito
+`https://ambrogiocorti.github.io/fasas-deploy/`: dopo aver verificato Render, rimuovere il dominio
+personalizzato `fasas.online` da **Settings › Pages** e cancellare il `CNAME` dal repository.
 
 ## Cosa fa il FASAS da solo in modalità cloud (`FASAS_CLOUD=1`)
 
@@ -100,9 +110,12 @@ python -c "import base64,os,secrets; print('DJANGO_SECRET_KEY=' + secrets.token_
    (passo 5), `FASAS_ADMIN_USERNAME` e `FASAS_ADMIN_PASSWORD` (almeno 10 caratteri, non banale).
 3. Avviare. Il primo avvio costruisce l'immagine (qualche minuto). Nel registro deve comparire
    `Amministratore … creato` e `Pianificatore avviato`.
-4. **Dominio**: Settings › Custom Domains › aggiungere `fasas.miacooperativa.it`; presso chi gestisce il dominio
-   creare il record DNS indicato da Render (di solito CNAME `fasas` → `NOME.onrender.com`). Il certificato HTTPS
-   arriva da solo. `FASAS_DOMAIN` deve essere proprio quel nome.
+4. **Dominio**: Settings › Custom Domains › aggiungere `fasas.online`; nel pannello DNS di **Register** sostituire
+   i record che attualmente puntano a GitHub Pages con **quelli indicati da Render per il dominio principale**.
+   Il dominio principale (`fasas.online`, senza sottodominio) può richiedere record `A` o `ALIAS`: non usare
+   automaticamente il CNAME di un sottodominio. Attendere la verifica di HTTPS, quindi **rimuovere solo
+   l'associazione del dominio personalizzato da GitHub Pages**, lasciando Pages attivo per la documentazione
+   all'indirizzo GitHub. `FASAS_DOMAIN=fasas.online` è già configurato.
 5. Aggiornamenti: `render.yaml` non pubblica da solo a ogni modifica su GitHub. Dopo il collaudo di una nuova
    versione: **Manual Deploy**. Lo schema del database si aggiorna da solo all'avvio: non c'è SQL da eseguire.
 
@@ -126,13 +139,13 @@ file dello Storage (i backup di Supabase, dove ci sono, contengono solo il datab
 
 ## Passo 6 – Primo accesso e controllo
 
-1. Aprire `https://fasas.miacooperativa.it`, entrare con l'amministratore: il FASAS chiede subito la verifica in due
+1. Aprire `https://fasas.online/`, entrare con l'amministratore: il FASAS chiede subito la verifica in due
    passaggi (app sul telefono).
 2. Togliere `FASAS_ADMIN_PASSWORD` dalle variabili di Render.
 3. Sistema › **Pannello di sistema** e **Errori del sistema**: database, file (object storage), backup, audit e job
    in verde. La mattina dopo: Sistema › Backup mostra il backup delle 02:30 e la copia fuori sede.
 4. Controllo dall'esterno (facoltativo, gratuito): un servizio di monitoraggio che chiama
-   `https://fasas.miacooperativa.it/salute/` ([MONITORAGGIO.md](MONITORAGGIO.md)); il dettaglio solo con
+   `https://fasas.online/salute/` ([MONITORAGGIO.md](MONITORAGGIO.md)); il dettaglio solo con
    `FASAS_HEALTH_TOKEN` (generato da Render: lo si legge tra le variabili).
 
 ## Cosa cambia rispetto all'installazione in struttura
@@ -147,6 +160,12 @@ file dello Storage (i backup di Supabase, dove ci sono, contengono solo il datab
 | Prova di ripristino trimestrale | Parziale (controllo dell'archivio) se non c'è un secondo database vuoto in `FASAS_RESTORE_TEST_DATABASE_URL` |
 | Ripristino completo | Su un progetto Supabase nuovo: `python manage.py backup_restore --confirm FILE` con le variabili del nuovo progetto; i file tornano nel bucket indicato da `FASAS_S3_BUCKET` |
 | Firma con CIE | Uguale: l'app FASAS Signer si collega al dominio HTTPS |
+
+I sorgenti e i manuali di FASAS Signer sono inclusi qui (`signer/`, `mobile/android/`, `mobile/ios/`),
+esattamente come nella repository locale. Nell'app Android, iOS o desktop scegliere `https://fasas.online/`
+come indirizzo del server e inserire il codice di abbinamento generato dall'area Firma digitale.
+La firma CIE richiede inoltre i certificati delle CA configurati sul server (`FASAS_CIE_TRUST_ROOTS`),
+il middleware CIE sul PC o l'NFC sul telefono e un collaudo con carte reali prima di documenti sanitari.
 
 ## Sicurezza e GDPR
 

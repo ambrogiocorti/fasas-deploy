@@ -15,7 +15,9 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.db import connection
 from django.db.migrations.loader import MigrationLoader
+from django.http import HttpResponse
 from django.test import SimpleTestCase, TestCase, override_settings
+from django.test.client import RequestFactory
 from django.utils import timezone
 
 from fasas.accounts.models import Role, User
@@ -23,6 +25,7 @@ from fasas.backups import services
 from fasas.core import scheduler
 from fasas.core.cloud import cloud_checks
 from fasas.core.encryption import read_encrypted, store_encrypted
+from fasas.core.middleware import PublicDomainOnlyMiddleware
 from fasas.core.models import JobRun
 
 from .base import FasasTestCase
@@ -196,6 +199,27 @@ class ControlliCloudTest(SimpleTestCase):
         env = {"FASAS_DOMAIN": "https://FASAS.Esempio.it/, fasas2.esempio.it", "RENDER_EXTERNAL_HOSTNAME": "fasas.onrender.com"}
         with mock.patch.dict(os.environ, env):
             self.assertEqual(public_hosts(), ["fasas.esempio.it", "fasas2.esempio.it", "fasas.onrender.com"])
+
+
+class DominioPubblicoTest(SimpleTestCase):
+    @override_settings(FASAS_CLOUD=True, FASAS_DOMAIN_HOSTS=["fasas.online"],
+                       ALLOWED_HOSTS=["fasas.online", "fasas-online.onrender.com"])
+    def test_portale_risponde_solo_al_dominio_della_struttura(self):
+        middleware = PublicDomainOnlyMiddleware(lambda request: HttpResponse("OK"))
+        factory = RequestFactory()
+        public = middleware(factory.get("/accesso/entra/", HTTP_HOST="fasas.online"))
+        technical = middleware(factory.get("/accesso/entra/", HTTP_HOST="fasas-online.onrender.com"))
+        api = middleware(factory.post("/api/firma/v1/abbina/", HTTP_HOST="fasas-online.onrender.com"))
+        self.assertEqual(public.status_code, 200)
+        self.assertEqual(technical.status_code, 404)
+        self.assertEqual(api.status_code, 404)
+
+    @override_settings(FASAS_CLOUD=False, FASAS_DOMAIN_HOSTS=["fasas.online"],
+                       ALLOWED_HOSTS=["127.0.0.1"])
+    def test_versione_locale_non_viene_limitata_dalla_regola_cloud(self):
+        middleware = PublicDomainOnlyMiddleware(lambda request: HttpResponse("OK"))
+        response = middleware(RequestFactory().get("/", HTTP_HOST="127.0.0.1"))
+        self.assertEqual(response.status_code, 200)
 
 
 @override_settings(ALLOWED_HOSTS=["fasas.esempio.it"], FASAS_ALLOWED_NETWORKS=["192.168.1.0/24"])
