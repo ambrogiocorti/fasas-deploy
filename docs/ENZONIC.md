@@ -17,8 +17,9 @@ secondo il sito del provider, viene eseguito negli Stati Uniti.
 - Regione: **Spain** o altra regione UE effettivamente disponibile.
 - Sorgente: repository pubblico `https://github.com/ambrogiocorti/fasas-deploy`.
 - Python: **3.12**.
-- Porta HTTP: usare il numero assegnato da Enzonic, impostandolo nella variabile `PORT`.
-- Comando di avvio: `bash scripts/avvia_enzonic.sh`.
+- Porta HTTP: usare la porta assegnata da Enzonic (`SERVER_PORT`, altrimenti impostare `PORT`).
+- File principale Python: `main.py`; avvia `scripts/avvia_enzonic.sh` tramite l'interprete Python.
+- Installazione da Git: disabilitare **User Uploaded Files**, inserire la repository Git e il branch `main`.
 
 Non modificare ancora il DNS. Se il piano gratuito non consente un dominio personale,
 interrompere la configurazione del dominio e valutarne l'alternativa prima di procedere.
@@ -41,7 +42,7 @@ Nell'area dedicata alle **variabili d'ambiente protette**, inserire le variabili
 - `FASAS_OFFSITE_BUCKET=fasas-backup`, `FASAS_OFFSITE_LOCK_DAYS=0` e tutti i
   `FASAS_OFFSITE_*` richiesti dalla guida cloud.
 - `FASAS_ADMIN_USERNAME` e `FASAS_ADMIN_PASSWORD` per creare il primo utente di prova.
-- `PORT` con la porta assegnata dal pannello Enzonic.
+- `PORT` con la porta assegnata dal pannello Enzonic, se non è già disponibile come `SERVER_PORT`.
 - `FASAS_DOMAIN` con **il solo host su cui si sta facendo il test**. Per il collaudo su
   un sottodominio temporaneo, impostare temporaneamente tale host; prima dell'apertura
   del sito definitivo riportare il valore a `fasas.online`.
