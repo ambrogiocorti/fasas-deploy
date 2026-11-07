@@ -78,6 +78,8 @@ def public_hosts():
 
 
 FASAS_PUBLIC_HOSTS = public_hosts()
+FASAS_DOMAIN_HOSTS = [value.lower().removeprefix("https://").removeprefix("http://").split("/")[0].strip()
+                      for value in env_list("FASAS_DOMAIN")]
 for _host in FASAS_PUBLIC_HOSTS:
     if _host not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append(_host)
@@ -125,6 +127,9 @@ MIDDLEWARE = [
     # /salute/ risponde prima dei controlli su Host e reti: i controlli dei servizi di hosting arrivano da indirizzi
     # interni con un Host qualsiasi. La risposta non contiene dati (il dettaglio solo con FASAS_HEALTH_TOKEN).
     "fasas.core.middleware.HealthCheckMiddleware",
+    # In modalità cloud il portale e le API rispondono solo ai domini della struttura, non al nome tecnico
+    # assegnato dall'hosting; /salute/ rimane raggiungibile per i controlli di disponibilità.
+    "fasas.core.middleware.PublicDomainOnlyMiddleware",
     "fasas.core.middleware.ApiSwitchMiddleware",
     "fasas.core.middleware.AllowedNetworksMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -144,7 +149,7 @@ MIDDLEWARE = [
 # File statici serviti dal FASAS stesso quando davanti non c'è un proxy che li serve (versione cloud)
 FASAS_SERVE_STATIC = env_bool("FASAS_SERVE_STATIC", FASAS_CLOUD)
 if FASAS_SERVE_STATIC:
-    MIDDLEWARE.insert(MIDDLEWARE.index("fasas.core.middleware.HealthCheckMiddleware") + 1,
+    MIDDLEWARE.insert(MIDDLEWARE.index("fasas.core.middleware.PublicDomainOnlyMiddleware") + 1,
                       "whitenoise.middleware.WhiteNoiseMiddleware")
 
 ROOT_URLCONF = "config.urls"
