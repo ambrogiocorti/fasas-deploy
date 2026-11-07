@@ -37,6 +37,14 @@ jobs:
           cache: pip
       - run: pip install --require-hashes -r requirements.lock
       - run: pip install "moto[s3]>=5.0" "ruff>=0.6"
+      - name: Installa SoftHSM2 e il Signer per provare un token PKCS#11 reale
+        if: matrix.database == 'sqlite'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends softhsm2 libsofthsm2
+          pip install --require-hashes -r signer/requirements.lock
+          softhsm2-util --version
+          python manage.py shell -c "from fasas.tests.test_cie_signer_pkcs11 import HAVE_PKCS11; assert HAVE_PKCS11, 'SoftHSM2 non disponibile nel test'"
       - run: ruff check fasas config
       - name: Imposta database
         if: matrix.database == 'postgres'
