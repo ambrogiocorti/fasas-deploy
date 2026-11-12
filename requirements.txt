@@ -1,0 +1,3 @@
+# L'hosting Python installa automaticamente requirements.txt.
+# La distribuzione web usa sempre le versioni e gli hash verificati per FASAS.
+-r requirements.lock
